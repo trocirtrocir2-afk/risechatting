@@ -90,9 +90,9 @@
     }
 
     .logo-img {
-      height: 60px;  /* BIGGER LOGO */
+      height: 60px;
       width: auto;
-      max-width: 240px;  /* increased from 160px */
+      max-width: 240px;
       object-fit: contain;
       transition: var(--transition);
     }
@@ -218,10 +218,11 @@
     }
 
     .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
+      display: flex;
+      flex-direction: column;
       align-items: center;
+      text-align: center;
+      gap: 2rem;
     }
 
     .hero-title {
@@ -229,6 +230,9 @@
       line-height: 1.1;
       font-weight: 600;
       margin-bottom: 1.5rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .hero-title .text-accent {
@@ -259,14 +263,15 @@
     .hero-text {
       font-size: 1.2rem;
       color: var(--text-soft);
-      max-width: 500px;
-      margin: 2rem 0;
+      max-width: 600px;
+      margin: 2rem auto;
     }
 
     .hero-buttons {
       display: flex;
       gap: 1rem;
       margin: 2rem 0;
+      justify-content: center;
     }
 
     /* ===== STATS SECTION ===== */
@@ -274,8 +279,8 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2rem;
-      margin-top: 4rem;
-      max-width: 900px;
+      margin: 4rem auto 0;
+      max-width: 700px;
     }
 
     .stat-card {
@@ -307,6 +312,11 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
       color: var(--text-light);
+    }
+
+    /* Hide the hero image wrapper since we're centering everything */
+    .hero-image-wrapper {
+      display: none;
     }
 
     /* ===== MARQUEE ===== */
@@ -529,7 +539,7 @@
     }
 
     .footer-brand .logo-img {
-      height: 50px;  /* bigger in footer too */
+      height: 50px;
       max-width: 200px;
     }
 
@@ -598,7 +608,6 @@
     /* ===== RESPONSIVE ===== */
     @media (max-width: 1024px) {
       .hero-grid {
-        grid-template-columns: 1fr;
         text-align: center;
       }
       
@@ -633,7 +642,7 @@
       }
       
       .logo-img {
-        height: 50px;  /* slightly smaller on mobile but still prominent */
+        height: 50px;
         max-width: 180px;
       }
       
@@ -651,6 +660,7 @@
       
       .stats-grid {
         grid-template-columns: 1fr;
+        max-width: 300px;
       }
       
       .services-grid {
@@ -672,9 +682,6 @@
   <nav class="navbar">
     <div class="nav-container">
       <a href="index.html" class="logo-link">
-        <!-- LOGO IMAGE - BIGGER AND CENTER STAGE -->
-        <!-- place at: images/rise_logo.png -->
-        <!-- RECOMMENDED SIZE: 240x60px (or similar proportion) -->
         <img src="images/rise_logo.png" alt="RISE" class="logo-img" onerror="this.src='https://via.placeholder.com/240x60?text=RISE+LOGO'">
       </a>
       <ul class="nav-menu">
@@ -721,11 +728,8 @@
             </div>
           </div>
           
-          <div class="hero-image-wrapper">
-            <!-- HERO IMAGE - place at: images/hero-creator.jpg -->
-            <!-- SIZE: 600x600px recommended, square works best -->
-      
-          </div>
+          <!-- Hero image wrapper hidden -->
+          <div class="hero-image-wrapper"></div>
         </div>
       </div>
     </section>
@@ -898,4 +902,3 @@
   
 
 </html>
-

@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>blog · RISE management</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #E8F2FC;
+      --bg-soft: #C9E1F6;
+      --bg-light: #BFDAF7;
+      --accent: #2B6C9E;
+      --accent-light: #4A8EC7;
+      --text-dark: #1A2B3C;
+      --text-soft: #2C3E50;
+      --text-light: #5A6F84;
+      --border-color: rgba(43, 108, 158, 0.15);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 8px 24px rgba(43, 108, 158, 0.08);
+      --shadow-lg: 0 20px 40px rgba(43, 108, 158, 0.12);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .heading-font {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ===== UTILITY CLASSES ===== */
+    .text-accent { color: var(--accent); }
+    .bg-soft { background-color: var(--bg-secondary); }
+    .bg-light { background-color: var(--bg-light); }
+
+    /* ===== NAVIGATION (same as index) ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+      padding: 0.75rem 0;
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      height: 60px;
+      width: auto;
+      max-width: 240px;
+      object-fit: contain;
+      transition: var(--transition);
+    }
+
+    .logo-img:hover {
+      transform: scale(1.02);
+      opacity: 0.95;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid transparent;
+      transition: var(--transition);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(43, 108, 158, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(43, 108, 158, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(43, 108, 158, 0.2);
+    }
+
+    .btn-large {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+    }
+
+    .btn-small {
+      padding: 0.5rem 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+      padding: 10rem 2rem 4rem;
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      position: relative;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: url('images/pattern-dots.svg') repeat;
+      opacity: 0.03;
+      pointer-events: none;
+    }
+
+    .page-header-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .page-badge {
+      display: inline-block;
+      background: rgba(43, 108, 158, 0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .page-title {
+      font-size: 4rem;
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.3rem;
+      color: var(--text-soft);
+      max-width: 600px;
+    }
+
+    /* ===== SEARCH & FILTER ===== */
+    .blog-toolbar {
+      max-width: 1280px;
+      margin: 3rem auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .search-box input {
+      border: none;
+      outline: none;
+      padding: 0.5rem 0;
+      width: 250px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .search-box button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .search-box button:hover {
+      background: var(--accent-light);
+    }
+
+    .category-filter {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .category-tag {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .category-tag:hover,
+    .category-tag.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* ===== FEATURED POST ===== */
+    .featured-post {
+      max-width: 1280px;
+      margin: 3rem auto;
+      background: white;
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .featured-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      min-height: 400px;
+    }
+
+    .featured-content {
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .featured-label {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 0.25rem 1rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+      width: fit-content;
+    }
+
+    .featured-content h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+    }
+
+    .featured-meta {
+      display: flex;
+      gap: 1.5rem;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .featured-excerpt {
+      color: var(--text-soft);
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    /* ===== BLOG GRID ===== */
+    .blog-section {
+      padding: 3rem 2rem 5rem;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .blog-card {
+      background: white;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .blog-card-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .blog-card-content {
+      padding: 1.5rem;
+    }
+
+    .blog-card-category {
+      display: inline-block;
+      background: var(--bg-secondary);
+      color: var(--accent);
+      padding: 0.25rem 1rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .blog-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+      color: var(--text-dark);
+      line-height: 1.4;
+    }
+
+    .blog-card-meta {
+      display: flex;
+      gap: 1rem;
+      color: var(--text-light);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .blog-card-excerpt {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .blog-card-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: var(--transition);
+    }
+
+    .blog-card-link:hover {
+      gap: 0.5rem;
+    }
+
+    /* ===== POPULAR POSTS SIDEBAR ===== */
+    .blog-layout {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      padding: 2rem;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 100px;
+      align-self: start;
+    }
+
+    .sidebar-widget {
+      background: var(--bg-secondary);
+      border-radius: 30px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .widget-title {
+      font-size: 1.3rem;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .widget-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .popular-post {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    .popular-post-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 15px;
+      object-fit: cover;
+    }
+
+    .popular-post-content h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .popular-post-content h4 a {
+      color: var(--text-dark);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .popular-post-content h4 a:hover {
+      color: var(--accent);
+    }
+
+    .popular-post-date {
+      font-size: 0.8rem;
+      color: var(--text-light);
+    }
+
+    .category-list {
+      list-style: none;
+    }
+
+    .category-list li {
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .category-list a {
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .category-list a:hover {
+      color: var(--accent);
+    }
+
+    .category-count {
+      background: white;
+      padding: 0.2rem 0.8rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .tag:hover {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* ===== NEWSLETTER ===== */
+    .newsletter-section {
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-light) 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+
+    .newsletter-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .newsletter-title {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .newsletter-text {
+      color: var(--text-soft);
+      margin-bottom: 2rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 1rem;
+      background: white;
+      padding: 0.5rem;
+      border-radius: 50px;
+      border: 1px solid var(--border-color);
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 0.75rem 1.5rem;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .newsletter-form button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .newsletter-form button:hover {
+      background: var(--accent-light);
+    }
+
+    /* ===== PAGINATION ===== */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 4rem;
+    }
+
+    .page-link {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: white;
+      border: 1px solid var(--border-color);
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .page-link:hover,
+    .page-link.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: white;
+      border-top: 1px solid var(--border-color);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+    }
+
+    .footer-brand .logo-link {
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .footer-brand .logo-img {
+      height: 50px;
+      max-width: 200px;
+    }
+
+    .footer-brand p {
+      color: var(--text-light);
+      margin: 1.5rem 0;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .footer-links h4 {
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 3rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .blog-layout {
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        position: static;
+      }
+      
+      .featured-post {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .page-title {
+        font-size: 2.5rem;
+      }
+      
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .blog-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .search-box {
+        width: 100%;
+      }
+      
+      .search-box input {
+        width: 100%;
+      }
+      
+      .newsletter-form {
+        flex-direction: column;
+        background: transparent;
+        padding: 0;
+      }
+      
+      .newsletter-form input {
+        border: 1px solid var(--border-color);
+        border-radius: 50px;
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo-link">
+        <img src="images/rise_logo.png" alt="RISE" class="logo-img" onerror="this.src='https://via.placeholder.com/240x60?text=RISE+LOGO'">
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">home</a></li>
+        <li><a href="about.html" class="nav-link">about</a></li>
+        <li><a href="services.html" class="nav-link">services</a></li>
+        <li><a href="results.html" class="nav-link">results</a></li>
+        <li><a href="blog.html" class="nav-link active">blog</a></li>
+        <li><a href="contact.html" class="nav-link">contact</a></li>
+      </ul>
+      <button class="btn-primary" onclick="window.location.href='contact.html'">Contact 💬</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+      <div class="page-header-content">
+        <div class="page-badge">✦ insights & updates ✦</div>
+        <h1 class="page-title">the <span class="text-accent">RISE</span> blog</h1>
+        <p class="page-subtitle">tips, strategies, and insights to help you grow your onlyfans presence</p>
+        
+        <!-- SEARCH AND FILTER -->
+        <div class="blog-toolbar">
+          <div class="search-box">
+            <input type="text" placeholder="Search articles...">
+            <button>search</button>
+          </div>
+          <div class="category-filter">
+            <span class="category-tag active">all</span>
+            <span class="category-tag">chatting</span>
+            <span class="category-tag">ppv</span>
+            <span class="category-tag">analytics</span>
+            <span class="category-tag">tips</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED POST -->
+    <section class="container">
+      <div class="featured-post">
+        <!-- FEATURED IMAGE - place at: images/blog-featured.jpg -->
+        <!-- SIZE: 800x600px recommended -->
+        <img src="images/blog-featured.jpg" alt="featured post" class="featured-image" onerror="this.src='https://via.placeholder.com/800x600?text=Featured+Post'">
+        <div class="featured-content">
+          <span class="featured-label">✨ featured</span>
+          <h2>how to 10x your ppv revenue in 2026</h2>
+          <div class="featured-meta">
+            <span>by Bojan</span>
+            <span>•</span>
+            <span>feb 15, 2026</span>
+            <span>•</span>
+            <span>8 min read</span>
+          </div>
+          <p class="featured-excerpt">discover the exact strategies we use to help creators multiply their PPV income through timing, personalization, and data-driven pricing.</p>
+          <button class="btn-primary" style="width: fit-content;" onclick="alert('opening article...')">read article →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN BLOG LAYOUT -->
+    <section class="blog-section">
+      <div class="blog-layout">
+        <!-- LEFT: BLOG GRID -->
+        <div>
+          <div class="blog-grid">
+            <!-- BLOG POST 1 - place at: images/blog-1.jpg -->
+            <!-- SIZE: 400x200px recommended -->
+            <article class="blog-card">
+              <img src="images/blog-1.jpg" alt="blog post" class="blog-card-image" onerror="this.src='https://via.placeholder.com/400x200?blog=1'">
+              <div class="blog-card-content">
+                <span class="blog-card-category">chatting</span>
+                <h3>the art of authentic fan conversations</h3>
+                <div class="blog-card-meta">
+                  <span>andrija</span>
+                  <span>•</span>
+                  <span>feb 10, 2026</span>
+                </div>
+                <p class="blog-card-excerpt">how to build genuine connections that turn casual subscribers into loyal spenders.</p>
+                <a href="#" class="blog-card-link" onclick="alert('opening article...')">read more →</a>
+              </div>
+            </article>
+
+            <!-- BLOG POST 2 -->
+            <article class="blog-card">
+              <img src="images/blog-2.jpg" alt="blog post" class="blog-card-image" onerror="this.src='https://via.placeholder.com/400x200?blog=2'">
+              <div class="blog-card-content">
+                <span class="blog-card-category">analytics</span>
+                <h3>5 metrics that actually matter</h3>
+                <div class="blog-card-meta">
+                  <span>daniel</span>
+                  <span>•</span>
+                  <span>feb 5, 2026</span>
+                </div>
+                <p class="blog-card-excerpt">stop tracking vanity metrics. here's what we look at to drive real growth.</p>
+                <a href="#" class="blog-card-link" onclick="alert('opening article...')">read more →</a>
+              </div>
+            </article>
+
+            <!-- BLOG POST 3 -->
+            <article class="blog-card">
+              <img src="images/blog-3.jpg" alt="blog post" class="blog-card-image" onerror="this.src='https://via.placeholder.com/400x200?blog=3'">
+              <div class="blog-card-content">
+                <span class="blog-card-category">ppv</span>
+                <h3>timing is everything: when to send PPV</h3>
+                <div class="blog-card-meta">
+                  <span>bojan</span>
+                  <span>•</span>
+                  <span>jan 28, 2026</span>
+                </div>
+                <p class="blog-card-excerpt">the best times to drop PPV content for maximum opens and conversions.</p>
+                <a href="#" class="blog-card-link" onclick="alert('opening article...')">read more →</a>
+              </div>
+            </article>
+
+            <!-- BLOG POST 4 -->
+            <article class="blog-card">
+              <img src="images/blog-4.jpg" alt="blog post" class="blog-card-image" onerror="this.src='https://via.placeholder.com/400x200?blog=4'">
+              <div class="blog-card-content">
+                <span class="blog-card-category">tips</span>
+                <h3>how to price your content</h3>
+                <div class="blog-card-meta">
+                  <span>andrija</span>
+                  <span>•</span>
+                  <span>jan 20, 2026</span>
+                </div>
+                <p class="blog-card-excerpt">a data-backed guide to finding the sweet spot for your PPV pricing.</p>
+                <a href="#" class="blog-card-link" onclick="alert('opening article...')">read more →</a>
+              </div>
+            </article>
+
+            <!-- BLOG POST 5 -->
+            <article class="blog-card">
+              <img src="images/blog-5.jpg" alt="blog post" class="blog-card-image" onerror="this.src='https://via.placeholder.com/400x200?blog=5'">
+              <div class="blog-card-content">
+                <span class="blog-card-category">chatting</span>
+                <h3>handling difficult fans with grace</h3>
+                <div class="blog-card-meta">
+                  <span>daniel</span>
+                  <span>•</span>
+                  <span>jan 12, 2026</span>
+                </div>
+                <p class="blog-card-excerpt">how to de-escalate and even convert challenging situations.</p>
+                <a href="#" class="blog-card-link" onclick="alert('opening article...')">read more →</a>
+              </div>
+            </article>
+
+            <!-- BLOG POST 6 -->
+            <article class="blog-card">
+              <img src="images/blog-6.jpg" alt="blog post" class="blog-card-image" onerror="this.src='https://via.placeholder.com/400x200?blog=6'">
+              <div class="blog-card-content">
+                <span class="blog-card-category">analytics</span>
+                <h3>understanding LTV and churn</h3>
+                <div class="blog-card-meta">
+                  <span>bojan</span>
+                  <span>•</span>
+                  <span>jan 5, 2026</span>
+                </div>
+                <p class="blog-card-excerpt">the two metrics that determine your long-term success.</p>
+                <a href="#" class="blog-card-link" onclick="alert('opening article...')">read more →</a>
+              </div>
+            </article>
+          </div>
+
+          <!-- PAGINATION -->
+          <div class="pagination">
+            <a href="#" class="page-link active">1</a>
+            <a href="#" class="page-link">2</a>
+            <a href="#" class="page-link">3</a>
+            <a href="#" class="page-link">4</a>
+            <a href="#" class="page-link">→</a>
+          </div>
+        </div>
+
+        <!-- RIGHT: SIDEBAR -->
+        <aside class="sidebar">
+          <!-- POPULAR POSTS WIDGET -->
+          <div class="sidebar-widget">
+            <h3 class="widget-title">popular posts</h3>
+            <!-- POPULAR 1 - place at: images/popular-1.jpg -->
+            <!-- SIZE: 70x70px square -->
+            <div class="popular-post">
+              <img src="images/popular-1.jpg" alt="popular post" class="popular-post-image" onerror="this.src='https://via.placeholder.com/70x70?pop=1'">
+              <div class="popular-post-content">
+                <h4><a href="#" onclick="alert('opening article...')">how to 10x your PPV revenue</a></h4>
+                <div class="popular-post-date">feb 15, 2026</div>
+              </div>
+            </div>
+            <div class="popular-post">
+              <img src="images/popular-2.jpg" alt="popular post" class="popular-post-image" onerror="this.src='https://via.placeholder.com/70x70?pop=2'">
+              <div class="popular-post-content">
+                <h4><a href="#" onclick="alert('opening article...')">5 metrics that actually matter</a></h4>
+                <div class="popular-post-date">feb 5, 2026</div>
+              </div>
+            </div>
+            <div class="popular-post">
+              <img src="images/popular-3.jpg" alt="popular post" class="popular-post-image" onerror="this.src='https://via.placeholder.com/70x70?pop=3'">
+              <div class="popular-post-content">
+                <h4><a href="#" onclick="alert('opening article...')">the art of authentic conversations</a></h4>
+                <div class="popular-post-date">feb 10, 2026</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- CATEGORIES WIDGET -->
+          <div class="sidebar-widget">
+            <h3 class="widget-title">categories</h3>
+            <ul class="category-list">
+              <li><a href="#">chatting</a> <span class="category-count">12</span></li>
+              <li><a href="#">PPV & tips</a> <span class="category-count">8</span></li>
+              <li><a href="#">analytics</a> <span class="category-count">6</span></li>
+              <li><a href="#">voice notes</a> <span class="category-count">4</span></li>
+              <li><a href="#">growth strategies</a> <span class="category-count">9</span></li>
+            </ul>
+          </div>
+
+          <!-- TAG CLOUD -->
+          <div class="sidebar-widget">
+            <h3 class="widget-title">popular tags</h3>
+            <div class="tag-cloud">
+              <a href="#" class="tag">chatting</a>
+              <a href="#" class="tag">ppv</a>
+              <a href="#" class="tag">tips</a>
+              <a href="#" class="tag">analytics</a>
+              <a href="#" class="tag">crm</a>
+              <a href="#" class="tag">voice</a>
+              <a href="#" class="tag">growth</a>
+              <a href="#" class="tag">retention</a>
+              <a href="#" class="tag">conversion</a>
+            </div>
+          </div>
+
+          <!-- NEWSLETTER MINI -->
+          <div class="sidebar-widget" style="background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%); color: white;">
+            <h3 class="widget-title" style="color: white;">get updates</h3>
+            <p style="margin-bottom: 1rem; font-size: 0.95rem;">join 500+ creators who get our weekly newsletter</p>
+            <input type="email" placeholder="your email" style="width: 100%; padding: 0.75rem; border-radius: 50px; border: none; margin-bottom: 0.5rem;">
+            <button class="btn-primary" style="width: 100%; background: white; color: var(--accent);">subscribe</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER SECTION (full width) -->
+    <section class="newsletter-section">
+      <div class="newsletter-container">
+        <h2 class="newsletter-title">never miss an <span class="text-accent">insight</span></h2>
+        <p class="newsletter-text">join 500+ creators who get our weekly newsletter with tips, strategies, and industry updates</p>
+        <div class="newsletter-form">
+          <input type="email" placeholder="your email address">
+          <button>subscribe</button>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-light);">no spam, unsubscribe anytime</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo-link">
+          <img src="images/rise_logo.png" alt="RISE" class="logo-img" onerror="this.style.display='none'">
+        </a>
+        <p>premium onlyfans management for serious creators</p>
+        <div class="social-links">
+          <a href="#" class="social-link">📷</a>
+          <a href="#" class="social-link">📱</a>
+          <a href="#" class="social-link">🐦</a>
+          <a href="#" class="social-link">💬</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>pages</h4>
+        <ul>
+          <li><a href="index.html">home</a></li>
+          <li><a href="about.html">about</a></li>
+          <li><a href="services.html">services</a></li>
+          <li><a href="results.html">results</a></li>
+          <li><a href="blog.html">blog</a></li>
+          <li><a href="contact.html">contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>legal</h4>
+        <ul>
+          <li><a href="#">privacy</a></li>
+          <li><a href="#">terms</a></li>
+          <li><a href="#">cookies</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>contact</h4>
+        <ul>
+          <li><a href="mailto:hello@rise.agency">hello@rise.agency</a></li>
+          <li><a href="#">@rise.agency</a></li>
+          <li><a href="#">telegram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 RISE · premium creator management · all rights reserved
+    </div>
+  </footer>
+
+  <script>
+    // active nav based on current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href');
+        if (linkPage === currentPage) {
+          link.classList.add('active');
+        }
+      });
+
+      // category filter click simulation
+      const categoryTags = document.querySelectorAll('.category-tag');
+      categoryTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+          categoryTags.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          alert(`filtering by: ${this.textContent} (demo)`);
+        });
+      });
+
+      // search simulation
+      const searchBtn = document.querySelector('.search-box button');
+      if (searchBtn) {
+        searchBtn.addEventListener('click', function() {
+          const query = document.querySelector('.search-box input').value;
+          alert(`searching for: "${query}" (demo)`);
+        });
+      }
+
+      // newsletter simulation
+      const newsletterBtn = document.querySelector('.newsletter-form button');
+      if (newsletterBtn) {
+        newsletterBtn.addEventListener('click', function() {
+          const email = document.querySelector('.newsletter-form input').value;
+          alert(`subscribed with: ${email} (demo)`);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

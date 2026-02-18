@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>about · RISE management</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #E8F2FC;
+      --bg-soft: #C9E1F6;
+      --bg-light: #BFDAF7;
+      --accent: #2B6C9E;
+      --accent-light: #4A8EC7;
+      --text-dark: #1A2B3C;
+      --text-soft: #2C3E50;
+      --text-light: #5A6F84;
+      --border-color: rgba(43, 108, 158, 0.15);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 8px 24px rgba(43, 108, 158, 0.08);
+      --shadow-lg: 0 20px 40px rgba(43, 108, 158, 0.12);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .heading-font {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ===== UTILITY CLASSES ===== */
+    .text-accent { color: var(--accent); }
+    .bg-soft { background-color: var(--bg-secondary); }
+    .bg-light { background-color: var(--bg-light); }
+
+    /* ===== NAVIGATION (same as index) ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+      padding: 0.75rem 0;
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      height: 60px;
+      width: auto;
+      max-width: 240px;
+      object-fit: contain;
+      transition: var(--transition);
+    }
+
+    .logo-img:hover {
+      transform: scale(1.02);
+      opacity: 0.95;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid transparent;
+      transition: var(--transition);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(43, 108, 158, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(43, 108, 158, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(43, 108, 158, 0.2);
+    }
+
+    .btn-large {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+    }
+
+    .btn-small {
+      padding: 0.5rem 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+      padding: 10rem 2rem 4rem;
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      position: relative;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: url('images/pattern-dots.svg') repeat;
+      opacity: 0.03;
+      pointer-events: none;
+    }
+
+    .page-header-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .page-badge {
+      display: inline-block;
+      background: rgba(43, 108, 158, 0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .page-title {
+      font-size: 4rem;
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.3rem;
+      color: var(--text-soft);
+      max-width: 600px;
+    }
+
+    /* ===== MISSION SECTION ===== */
+    .mission-section {
+      padding: 5rem 2rem;
+      background: white;
+    }
+
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .mission-content {
+      padding-right: 2rem;
+    }
+
+    .mission-tag {
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .mission-title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .mission-text {
+      color: var(--text-soft);
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .mission-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .mission-stat {
+      text-align: left;
+    }
+
+    .mission-stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .mission-stat-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .mission-image {
+      width: 100%;
+      height: auto;
+      border-radius: 30px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* ===== VALUES SECTION ===== */
+    .values-section {
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-light) 100%);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(43, 108, 158, 0.08);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .section-title .text-accent {
+      color: var(--accent);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .value-card {
+      background: white;
+      border-radius: 30px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .value-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .value-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .value-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .value-card p {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+    }
+
+    /* ===== TEAM SECTION ===== */
+    .team-section {
+      padding: 5rem 2rem;
+      background: white;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .team-card {
+      background: var(--bg-secondary);
+      border-radius: 30px;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .team-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .team-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      object-fit: cover;
+      border: 3px solid white;
+      box-shadow: var(--shadow-md);
+    }
+
+    .team-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+      color: var(--accent);
+    }
+
+    .team-role {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .team-bio {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .team-social {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .team-social-link {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      text-decoration: none;
+      transition: var(--transition);
+      border: 1px solid var(--border-color);
+    }
+
+    .team-social-link:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* ===== STORY TIMELINE ===== */
+    .story-section {
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-light) 100%);
+    }
+
+    .timeline {
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+      opacity: 0.3;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+      grid-column: 2;
+    }
+
+    .timeline-item:nth-child(even) .timeline-year {
+      grid-column: 1;
+      text-align: right;
+    }
+
+    .timeline-year {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+      opacity: 0.3;
+    }
+
+    .timeline-content {
+      background: white;
+      border-radius: 30px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+    }
+
+    .timeline-content h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .timeline-content p {
+      color: var(--text-soft);
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .cta-title {
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .cta-text {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      background: white;
+      color: var(--accent);
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===== FOOTER (same as index) ===== */
+    .footer {
+      background: white;
+      border-top: 1px solid var(--border-color);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+    }
+
+    .footer-brand .logo-link {
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .footer-brand .logo-img {
+      height: 50px;
+      max-width: 200px;
+    }
+
+    .footer-brand p {
+      color: var(--text-light);
+      margin: 1.5rem 0;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .footer-links h4 {
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 3rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .mission-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .values-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .timeline::before {
+        left: 30px;
+      }
+      
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .timeline-item:nth-child(even) .timeline-content,
+      .timeline-item .timeline-content {
+        grid-column: 1;
+      }
+      
+      .timeline-item:nth-child(even) .timeline-year,
+      .timeline-item .timeline-year {
+        grid-column: 1;
+        text-align: left;
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .page-title {
+        font-size: 2.5rem;
+      }
+      
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .mission-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo-link">
+        <img src="images/rise_logo.png" alt="RISE" class="logo-img" onerror="this.src='https://via.placeholder.com/240x60?text=RISE+LOGO'">
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">home</a></li>
+        <li><a href="about.html" class="nav-link active">about</a></li>
+        <li><a href="services.html" class="nav-link">services</a></li>
+        <li><a href="results.html" class="nav-link">results</a></li>
+        <li><a href="blog.html" class="nav-link">blog</a></li>
+        <li><a href="contact.html" class="nav-link">contact</a></li>
+      </ul>
+      <button class="btn-primary" onclick="window.location.href='contact.html'">Contact 💬</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+      <div class="page-header-content">
+        <div class="page-badge">✦ our story ✦</div>
+        <h1 class="page-title">about <span class="text-accent">RISE</span></h1>
+        <p class="page-subtitle">we're on a mission to help creators reach their full potential through data-driven chat management.</p>
+      </div>
+    </section>
+
+    <!-- MISSION SECTION -->
+    <section class="mission-section">
+      <div class="mission-grid">
+        <div class="mission-content">
+          <div class="mission-tag">✦ our mission</div>
+          <h2 class="mission-title">changing the way creators <span class="text-accent">connect</span></h2>
+          <p class="mission-text">RISE was founded in 2020 with a simple belief: creators deserve better than generic, robotic chat management. We built a team of real humans who understand the nuance of building genuine connections with fans.</p>
+          <p class="mission-text">Today, we work with 70+ creators across the globe, helping them turn casual subscribers into loyal, high-spending fans through personalized engagement strategies and data-backed decision making.</p>
+          
+          <div class="mission-stats">
+            <div class="mission-stat">
+              <div class="mission-stat-number">70+</div>
+              <div class="mission-stat-label">creators</div>
+            </div>
+            <div class="mission-stat">
+              <div class="mission-stat-number">$3.2M+</div>
+              <div class="mission-stat-label">monthly revenue</div>
+            </div>
+            <div class="mission-stat">
+              <div class="mission-stat-number">24/7</div>
+              <div class="mission-stat-label">support</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <!-- MISSION IMAGE - place at: images/about-mission.jpg -->
+          <!-- SIZE: 600x400px recommended -->
+          <img src="images/about-mission.jpg" alt="RISE team working" class="mission-image" onerror="this.src='https://via.placeholder.com/600x400?text=RISE+Team'">
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUES SECTION -->
+    <section class="values-section">
+      <div class="section-header">
+        <div class="section-tag">✦ what we stand for ✦</div>
+        <h2 class="section-title">our core <span class="text-accent">values</span></h2>
+        <p class="section-subtitle">the principles that guide everything we do</p>
+      </div>
+
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">🔍</div>
+          <h3>transparency</h3>
+          <p>weekly reports, open communication, no hidden fees. you always know what's happening.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">📊</div>
+          <h3>data-driven</h3>
+          <p>every decision backed by real metrics. we optimize based on what actually works.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">❤️</div>
+          <h3>human touch</h3>
+          <p>real people, real conversations. we maintain your authentic voice.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🚀</div>
+          <h3>growth focus</h3>
+          <p>your success is our success. we're invested in your long-term growth.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM SECTION -->
+    <section class="team-section">
+      <div class="section-header">
+        <div class="section-tag">✦ meet the team ✦</div>
+        <h2 class="section-title">the people behind <span class="text-accent">RISE</span></h2>
+        <p class="section-subtitle">real humans, real expertise</p>
+      </div>
+
+      <div class="team-grid">
+        <!-- TEAM MEMBER 1 - place at: images/team-bojan.jpg -->
+        <!-- SIZE: 300x300px square -->
+        <div class="team-card">
+          <img src="images/avatar1.webp" alt="Bojan" class="team-image" onerror="this.src='https://via.placeholder.com/300x300?text=Bojan'">
+          <h3>Bojan</h3>
+          <div class="team-role">founder · strategy</div>
+          <p class="team-bio">5+ years in creator management. obsessed with data and helping creators scale.</p>
+          <div class="team-social">
+            <a href="#" class="team-social-link">📧</a>
+            <a href="#" class="team-social-link">💬</a>
+            <a href="#" class="team-social-link">📷</a>
+          </div>
+        </div>
+
+        <!-- TEAM MEMBER 2 - place at: images/team-andrija.jpg -->
+        <div class="team-card">
+          <img src="images/avatar2.webp" alt="Andrija" class="team-image" onerror="this.src='https://via.placeholder.com/300x300?text=Andrija'">
+          <h3>Andrija</h3>
+          <div class="team-role">operations · chat lead</div>
+          <p class="team-bio">ensures every conversation feels authentic. trains our chat team.</p>
+          <div class="team-social">
+            <a href="#" class="team-social-link">📧</a>
+            <a href="#" class="team-social-link">💬</a>
+            <a href="#" class="team-social-link">📷</a>
+          </div>
+        </div>
+
+        <!-- TEAM MEMBER 3 - place at: images/team-daniel.jpg -->
+        <div class="team-card">
+          <img src="images/avatar3.png" alt="Daniel" class="team-image" onerror="this.src='https://via.placeholder.com/300x300?text=Daniel'">
+          <h3>Daniel</h3>
+          <div class="team-role">analytics · growth</div>
+          <p class="team-bio">turns data into actionable insights. tracks what matters.</p>
+          <div class="team-social">
+            <a href="#" class="team-social-link">📧</a>
+            <a href="#" class="team-social-link">💬</a>
+            <a href="#" class="team-social-link">📷</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STORY TIMELINE -->
+    <section class="story-section">
+      <div class="section-header">
+        <div class="section-tag">✦ our journey ✦</div>
+        <h2 class="section-title">how we <span class="text-accent">grew</span></h2>
+        <p class="section-subtitle">from an idea to 70+ creators</p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">2020</div>
+          <div class="timeline-content">
+            <h3>the beginning</h3>
+            <p>RISE founded by Tadija and Andrija with a mission to provide authentic chat management.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-year">2021</div>
+          <div class="timeline-content">
+            <h3>first 10 creators</h3>
+            <p>reached 10 creators and proved our model works. expanded team and systems.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-year">2023</div>
+          <div class="timeline-content">
+            <h3>$1M+ monthly revenue</h3>
+            <p>hit $1M in monthly creator revenue. Daniel joins to lead analytics.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-year">2026</div>
+          <div class="timeline-content">
+            <h3>70+ creators & growing</h3>
+            <p>now serving 70+ creators with $3.2M+ monthly revenue. just getting started.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+      <div class="container">
+        <h2 class="cta-title">ready to <span style="color: rgba(255,255,255,0.9);">rise?</span></h2>
+        <p class="cta-text">join 70+ creators who trust us with their growth</p>
+        <button class="cta-button" onclick="window.location.href='contact.html'">start your journey →</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo-link">
+          <img src="images/rise_logo.png" alt="RISE" class="logo-img" onerror="this.style.display='none'">
+        </a>
+        <p>premium onlyfans management for serious creators</p>
+        <div class="social-links">
+          <a href="#" class="social-link">📷</a>
+          <a href="#" class="social-link">📱</a>
+          <a href="#" class="social-link">🐦</a>
+          <a href="#" class="social-link">💬</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>pages</h4>
+        <ul>
+          <li><a href="index.html">home</a></li>
+          <li><a href="about.html">about</a></li>
+          <li><a href="services.html">services</a></li>
+          <li><a href="results.html">results</a></li>
+          <li><a href="blog.html">blog</a></li>
+          <li><a href="contact.html">contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>legal</h4>
+        <ul>
+          <li><a href="#">privacy</a></li>
+          <li><a href="#">terms</a></li>
+          <li><a href="#">cookies</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>contact</h4>
+        <ul>
+          <li><a href="mailto:hello@rise.agency">hello@rise.agency</a></li>
+          <li><a href="#">@rise.agency</a></li>
+          <li><a href="#">telegram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 RISE · premium creator management · all rights reserved
+    </div>
+  </footer>
+
+  <script>
+    // active nav based on current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href');
+        if (linkPage === currentPage) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

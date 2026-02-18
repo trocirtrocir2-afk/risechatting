@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RISE · premium onlyfans management</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #E8F2FC;
+      --bg-soft: #C9E1F6;
+      --bg-light: #BFDAF7;
+      --accent: #2B6C9E;
+      --accent-light: #4A8EC7;
+      --text-dark: #1A2B3C;
+      --text-soft: #2C3E50;
+      --text-light: #5A6F84;
+      --border-color: rgba(43, 108, 158, 0.15);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 8px 24px rgba(43, 108, 158, 0.08);
+      --shadow-lg: 0 20px 40px rgba(43, 108, 158, 0.12);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .heading-font {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ===== UTILITY CLASSES ===== */
+    .text-accent { color: var(--accent); }
+    .bg-soft { background-color: var(--bg-secondary); }
+    .bg-light { background-color: var(--bg-light); }
+
+    /* ===== NAVIGATION ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+      padding: 0.75rem 0;
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      height: 60px;  /* BIGGER LOGO */
+      width: auto;
+      max-width: 240px;  /* increased from 160px */
+      object-fit: contain;
+      transition: var(--transition);
+    }
+
+    .logo-img:hover {
+      transform: scale(1.02);
+      opacity: 0.95;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid transparent;
+      transition: var(--transition);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(43, 108, 158, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(43, 108, 158, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(43, 108, 158, 0.2);
+    }
+
+    .btn-large {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+    }
+
+    .btn-small {
+      padding: 0.5rem 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      padding: 10rem 2rem 6rem;
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: url('images/hero-pattern.svg') repeat;
+      opacity: 0.03;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(43, 108, 158, 0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: 3.8rem;
+      line-height: 1.1;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title .text-accent {
+      font-size: 4.2rem;
+      display: inline-block;
+      position: relative;
+    }
+
+    .hero-title .text-accent::after {
+      content: '';
+      position: absolute;
+      bottom: 5px;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: rgba(43, 108, 158, 0.2);
+      z-index: -1;
+    }
+
+    .hero-subtitle {
+      display: block;
+      font-size: 2rem;
+      color: var(--text-light);
+      margin-top: 0.5rem;
+      font-weight: 400;
+    }
+
+    .hero-text {
+      font-size: 1.2rem;
+      color: var(--text-soft);
+      max-width: 500px;
+      margin: 2rem 0;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: auto;
+      border-radius: 30px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .hero-image-caption {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      border: 1px solid var(--border-color);
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    /* ===== STATS SECTION ===== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+      max-width: 900px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 30px;
+      padding: 2rem 1.5rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-color);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+    }
+
+    /* ===== MARQUEE ===== */
+    .marquee-section {
+      background: var(--bg-secondary);
+      padding: 2rem 0;
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      overflow: hidden;
+    }
+
+    .marquee {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      animation: scroll 30s linear infinite;
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.2rem;
+      color: var(--accent);
+      opacity: 0.7;
+    }
+
+    .marquee-item span {
+      color: var(--text-light);
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===== SECTION STYLES ===== */
+    .section {
+      padding: 6rem 0;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(43, 108, 158, 0.08);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .section-title .text-accent {
+      color: var(--accent);
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* ===== SERVICES GRID ===== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 30px;
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--accent);
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .service-card p {
+      color: var(--text-light);
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    /* ===== FEATURED IMAGE SECTION ===== */
+    .featured-section {
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-light) 100%);
+      padding: 5rem 0;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .featured-image {
+      width: 100%;
+      height: auto;
+      border-radius: 30px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .featured-content {
+      padding: 2rem;
+    }
+
+    .featured-title {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .featured-list {
+      list-style: none;
+      margin: 2rem 0;
+    }
+
+    .featured-list li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .featured-list li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .testimonial-card {
+      background: white;
+      border-radius: 30px;
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-color);
+    }
+
+    .testimonial-stars {
+      color: #FFB800;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-text {
+      font-size: 1rem;
+      color: var(--text-soft);
+      font-style: italic;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .author-info h4 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .author-info p {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .cta-title {
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .cta-text {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      background: white;
+      color: var(--accent);
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: white;
+      border-top: 1px solid var(--border-color);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+    }
+
+    .footer-brand .logo-link {
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .footer-brand .logo-img {
+      height: 50px;  /* bigger in footer too */
+      max-width: 200px;
+    }
+
+    .footer-brand p {
+      color: var(--text-light);
+      margin: 1.5rem 0;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .footer-links h4 {
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 3rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      
+      .hero-text {
+        margin: 2rem auto;
+      }
+      
+      .hero-buttons {
+        justify-content: center;
+      }
+      
+      .stats-grid {
+        margin: 4rem auto 0;
+      }
+      
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .testimonials-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .logo-img {
+        height: 50px;  /* slightly smaller on mobile but still prominent */
+        max-width: 180px;
+      }
+      
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .hero-title .text-accent {
+        font-size: 2.8rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.5rem;
+      }
+      
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .featured-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo-link">
+        <!-- LOGO IMAGE - BIGGER AND CENTER STAGE -->
+        <!-- place at: images/rise_logo.png -->
+        <!-- RECOMMENDED SIZE: 240x60px (or similar proportion) -->
+        <img src="images/rise_logo.png" alt="RISE" class="logo-img" onerror="this.src='https://via.placeholder.com/240x60?text=RISE+LOGO'">
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link active">home</a></li>
+        <li><a href="about.html" class="nav-link">about</a></li>
+        <li><a href="services.html" class="nav-link">services</a></li>
+        <li><a href="results.html" class="nav-link">results</a></li>
+        <li><a href="blog.html" class="nav-link">blog</a></li>
+      </ul>
+      <button class="btn-primary" onclick="window.location.href='contact.html'">Contact 💬</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-badge">✦ premium creator management ✦</div>
+            <h1 class="hero-title">
+              <span>the </span>
+              <span class="text-accent">best</span>
+              <span> onlyfans</span>
+              <span class="hero-subtitle">chatting agency</span>
+            </h1>
+            <p class="hero-text">we chat, convert & nurture your fans with data-driven strategies that actually work.</p>
+            
+            <div class="hero-buttons">
+              <button class="btn-primary btn-large" onclick="window.location.href='contact.html'">apply now</button>
+              <button class="btn-outline btn-large" onclick="window.location.href='services.html'">see pricing</button>
+            </div>
+
+            <!-- STATS -->
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-number">70+</div>
+                <div class="stat-label">active creators</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">chat · ppv</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-number">$3.2M+</div>
+                <div class="stat-label">monthly revenue</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="hero-image-wrapper">
+            <!-- HERO IMAGE - place at: images/hero-creator.jpg -->
+            <!-- SIZE: 600x600px recommended, square works best -->
+            <img src="images/hero-creator.webp" alt="creator management" class="hero-image" onerror="this.src='https://via.placeholder.com/600x600?text=RISE+Creator'">
+            <div class="hero-image-caption">✨ top 0.1% creators</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE SECTION -->
+    <div class="marquee-section">
+      <div class="marquee">
+        <div class="marquee-item"><span>✦</span> bojandialogue</div>
+        <div class="marquee-item"><span>✦</span> andrijadialogue</div>
+        <div class="marquee-item"><span>✦</span> danieldialogue</div>
+        <div class="marquee-item"><span>✦</span> 20+ 5star reviews</div>
+        <div class="marquee-item"><span>✦</span> top 0.1%</div>
+        <div class="marquee-item"><span>✦</span> bojandialogue</div>
+        <div class="marquee-item"><span>✦</span> andrijadialogue</div>
+        <div class="marquee-item"><span>✦</span> danieldialogue</div>
+        <div class="marquee-item"><span>✦</span> 20+ 5star reviews</div>
+        <div class="marquee-item"><span>✦</span> top 0.1%</div>
+      </div>
+    </div>
+
+    <!-- SERVICES PREVIEW -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">✦ our expertise ✦</div>
+          <h2 class="section-title">premium <span class="text-accent">services</span></h2>
+          <p class="section-subtitle">everything you need to scale your onlyfans presence</p>
+        </div>
+        
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">💬</div>
+            <h3>24/7 chatting</h3>
+            <p>round‑the‑clock engagement, personalised responses, never miss a sale</p>
+            <button class="btn-outline btn-small" onclick="window.location.href='services.html'">learn more →</button>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">💰</div>
+            <h3>PPV & tips</h3>
+            <p>data‑driven upsell flows that convert casual followers into spenders</p>
+            <button class="btn-outline btn-small" onclick="window.location.href='services.html'">learn more →</button>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">📊</div>
+            <h3>CRM & analytics</h3>
+            <p>weekly reports, behaviour insights, LTV optimization</p>
+            <button class="btn-outline btn-small" onclick="window.location.href='services.html'">learn more →</button>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎙️</div>
+            <h3>custom voice notes</h3>
+            <p>premium upsell via scheduled, personalised voice messages</p>
+            <button class="btn-outline btn-small" onclick="window.location.href='services.html'">learn more →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED IMAGE SECTION -->
+    <section class="featured-section">
+      <div class="container">
+        <div class="featured-grid">
+          <div>
+            <!-- FEATURED IMAGE 1 - place at: images/featured-dashboard.jpg -->
+            <!-- SIZE: 500x600px recommended -->
+            <img src="images/featured-dashboard.png" alt="analytics dashboard" class="featured-image" onerror="this.src='https://via.placeholder.com/500x600?text=Analytics+Dashboard'">
+          </div>
+          <div class="featured-content">
+            <div class="section-tag">✦ data driven ✦</div>
+            <h2 class="featured-title">real-time <span class="text-accent">analytics</span> that matter</h2>
+            <p class="section-subtitle">we don't guess, we measure. every decision is backed by data.</p>
+            <ul class="featured-list">
+              <li>daily performance tracking</li>
+              <li>conversion rate optimization</li>
+              <li>subscriber behavior insights</li>
+              <li>revenue forecasting</li>
+            </ul>
+            <button class="btn-primary" onclick="window.location.href='services.html'">explore analytics →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">✦ success stories ✦</div>
+          <h2 class="section-title">what <span class="text-accent">creators</span> say</h2>
+          <p class="section-subtitle">real results from real people</p>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"best chatting agency i've worked with. professional, transparent, results speak for themselves."</p>
+            <div class="testimonial-author">
+              <!-- AVATAR - place at: images/avatar1.jpg -->
+              <!-- SIZE: 50x50px square -->
+              <img src="images/avatar1.webp" alt="creator" class="author-avatar" onerror="this.style.display='none'">
+              <div class="author-info">
+                <h4>Alex M.</h4>
+                <p>top 0.5% creator</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"pushing $70+ LTV consistently. great communication, 10/10 experience."</p>
+            <div class="testimonial-author">
+              <img src="images/avatar2.webp" alt="creator" class="author-avatar" onerror="this.style.display='none'">
+              <div class="author-info">
+                <h4>Sam K.</h4>
+                <p>top 1% creator</p>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"incredible team, best in the industry. 100% recommendable."</p>
+            <div class="testimonial-author">
+              <img src="images/avatar3.png" alt="creator" class="author-avatar" onerror="this.style.display='none'">
+              <div class="author-info">
+                <h4>Jordan P.</h4>
+                <p>top 0.3% creator</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+      <div class="container">
+        <h2 class="cta-title">ready to <span style="color: rgba(255,255,255,0.9);">rise?</span></h2>
+        <p class="cta-text">join 70+ creators who trust us with their growth</p>
+        <button class="cta-button" onclick="window.location.href='contact.html'">start your journey →</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo-link">
+          <img src="images/rise_logo.png" alt="RISE" class="logo-img" onerror="this.style.display='none'">
+        </a>
+        <p>premium onlyfans management for serious creators</p>
+        <div class="social-links">
+          <a href="#" class="social-link">📷</a>
+          <a href="#" class="social-link">📱</a>
+          <a href="#" class="social-link">🐦</a>
+          <a href="#" class="social-link">💬</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>pages</h4>
+        <ul>
+          <li><a href="index.html">home</a></li>
+          <li><a href="about.html">about</a></li>
+          <li><a href="services.html">services</a></li>
+          <li><a href="results.html">results</a></li>
+          <li><a href="blog.html">blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>legal</h4>
+        <ul>
+          <li><a href="#">privacy</a></li>
+          <li><a href="#">terms</a></li>
+          <li><a href="#">cookies</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>contact</h4>
+        <ul>
+          <li><a href="mailto:hello@rise.agency">hello@rise.agency</a></li>
+          <li><a href="#">@rise.agency</a></li>
+          <li><a href="#">telegram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 RISE · premium creator management · all rights reserved
+    </div>
+  </footer>
+
+  <script>
+    // simple active nav based on current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href');
+        if (linkPage === currentPage) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

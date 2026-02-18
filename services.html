@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>services · RISE management</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #E8F2FC;
+      --bg-soft: #C9E1F6;
+      --bg-light: #BFDAF7;
+      --accent: #2B6C9E;
+      --accent-light: #4A8EC7;
+      --text-dark: #1A2B3C;
+      --text-soft: #2C3E50;
+      --text-light: #5A6F84;
+      --border-color: rgba(43, 108, 158, 0.15);
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 8px 24px rgba(43, 108, 158, 0.08);
+      --shadow-lg: 0 20px 40px rgba(43, 108, 158, 0.12);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .heading-font {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ===== UTILITY CLASSES ===== */
+    .text-accent { color: var(--accent); }
+    .bg-soft { background-color: var(--bg-secondary); }
+    .bg-light { background-color: var(--bg-light); }
+
+    /* ===== NAVIGATION (same as index) ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+      padding: 0.75rem 0;
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      height: 60px;
+      width: auto;
+      max-width: 240px;
+      object-fit: contain;
+      transition: var(--transition);
+    }
+
+    .logo-img:hover {
+      transform: scale(1.02);
+      opacity: 0.95;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid transparent;
+      transition: var(--transition);
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 15px rgba(43, 108, 158, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(43, 108, 158, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+      padding: 0.75rem 2rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .btn-outline:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(43, 108, 158, 0.2);
+    }
+
+    .btn-large {
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+    }
+
+    .btn-small {
+      padding: 0.5rem 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+      padding: 10rem 2rem 4rem;
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      position: relative;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      background: url('images/pattern-dots.svg') repeat;
+      opacity: 0.03;
+      pointer-events: none;
+    }
+
+    .page-header-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .page-badge {
+      display: inline-block;
+      background: rgba(43, 108, 158, 0.1);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 2rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .page-title {
+      font-size: 4rem;
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.3rem;
+      color: var(--text-soft);
+      max-width: 600px;
+    }
+
+    /* ===== SERVICES OVERVIEW ===== */
+    .services-overview {
+      padding: 5rem 2rem;
+      background: white;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--bg-secondary);
+      border-radius: 30px;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .service-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .service-card p {
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .service-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .service-link:hover {
+      gap: 0.5rem;
+    }
+
+    /* ===== DETAILED SERVICES ===== */
+    .detailed-services {
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-light) 100%);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(43, 108, 158, 0.08);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .section-title {
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .section-title .text-accent {
+      color: var(--accent);
+    }
+
+    .services-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .service-detail-card {
+      background: white;
+      border-radius: 40px;
+      padding: 3rem;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .service-detail-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .service-detail-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .service-detail-icon {
+      font-size: 3.5rem;
+      background: var(--bg-secondary);
+      width: 80px;
+      height: 80px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .service-detail-header h2 {
+      font-size: 2rem;
+      color: var(--accent);
+    }
+
+    .service-description {
+      color: var(--text-soft);
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .service-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .service-features li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      color: var(--text-soft);
+    }
+
+    .service-features li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .service-pricing {
+      background: var(--bg-secondary);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pricing-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .pricing-period {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .pricing-note {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-top: 0.5rem;
+    }
+
+    .service-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    /* ===== PRICING SECTION ===== */
+    .pricing-section {
+      padding: 5rem 2rem;
+      background: white;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: var(--bg-secondary);
+      border-radius: 40px;
+      padding: 3rem 2rem;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pricing-card.popular {
+      background: white;
+      border: 2px solid var(--accent);
+      transform: scale(1.05);
+      z-index: 2;
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: white;
+      padding: 0.25rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pricing-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .pricing-card .price {
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      font-family: 'Space Grotesk', sans-serif;
+      margin-bottom: 0.5rem;
+    }
+
+    .pricing-card .price span {
+      font-size: 1rem;
+      color: var(--text-light);
+      font-weight: 400;
+    }
+
+    .pricing-card .description {
+      color: var(--text-soft);
+      margin-bottom: 2rem;
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      color: var(--text-soft);
+      font-size: 0.95rem;
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ===== ADD-ONS SECTION ===== */
+    .addons-section {
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-light) 100%);
+    }
+
+    .addons-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .addon-card {
+      background: white;
+      border-radius: 30px;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .addon-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .addon-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .addon-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .addon-card p {
+      color: var(--text-soft);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .addon-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* ===== FAQ SECTION ===== */
+    .faq-section {
+      padding: 5rem 2rem;
+      background: white;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--bg-secondary);
+      border-radius: 30px;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+      transition: var(--transition);
+    }
+
+    .faq-item:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .faq-question {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .faq-answer {
+      color: var(--text-soft);
+      font-size: 0.95rem;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+      color: white;
+    }
+
+    .cta-title {
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .cta-text {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      background: white;
+      color: var(--accent);
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: white;
+      border-top: 1px solid var(--border-color);
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: 3rem;
+    }
+
+    .footer-brand .logo-link {
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .footer-brand .logo-img {
+      height: 50px;
+      max-width: 200px;
+    }
+
+    .footer-brand p {
+      color: var(--text-light);
+      margin: 1.5rem 0;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .social-link:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .footer-links h4 {
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-links ul {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 3rem auto 0;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-color);
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .services-detail-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .addons-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+      
+      .page-title {
+        font-size: 2.5rem;
+      }
+      
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .pricing-card.popular {
+        transform: scale(1);
+      }
+      
+      .addons-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .service-detail-card {
+        padding: 2rem;
+      }
+      
+      .service-detail-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .service-buttons {
+        flex-direction: column;
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVIGATION -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo-link">
+        <img src="images/rise_logo.png" alt="RISE" class="logo-img" onerror="this.src='https://via.placeholder.com/240x60?text=RISE+LOGO'">
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="nav-link">home</a></li>
+        <li><a href="about.html" class="nav-link">about</a></li>
+        <li><a href="services.html" class="nav-link active">services</a></li>
+        <li><a href="results.html" class="nav-link">results</a></li>
+        <li><a href="blog.html" class="nav-link">blog</a></li>
+        <li><a href="contact.html" class="nav-link">contact</a></li>
+      </ul>
+      <button class="btn-primary" onclick="window.location.href='contact.html'">Contact 💬</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+      <div class="page-header-content">
+        <div class="page-badge">✦ what we offer ✦</div>
+        <h1 class="page-title">our <span class="text-accent">services</span></h1>
+        <p class="page-subtitle">comprehensive chat management solutions designed to maximize your revenue and grow your brand.</p>
+      </div>
+    </section>
+
+    <!-- SERVICES OVERVIEW (quick cards) -->
+    <section class="services-overview">
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">💬</div>
+          <h3>24/7 chatting</h3>
+          <p>round-the-clock engagement, never miss a sale</p>
+          <a href="#chatting" class="service-link">learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">💰</div>
+          <h3>PPV & tips</h3>
+          <p>data-driven upsell flows that convert</p>
+          <a href="#ppv" class="service-link">learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <h3>CRM & analytics</h3>
+          <p>weekly reports, behavior insights</p>
+          <a href="#analytics" class="service-link">learn more →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🎙️</div>
+          <h3>custom voice notes</h3>
+          <p>premium upsell via voice</p>
+          <a href="#voice" class="service-link">learn more →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DETAILED SERVICES -->
+    <section class="detailed-services" id="services-detail">
+      <div class="section-header">
+        <div class="section-tag">✦ detailed offerings ✦</div>
+        <h2 class="section-title">everything you need to <span class="text-accent">scale</span></h2>
+        <p class="section-subtitle">each service is tailored to your unique brand voice and goals</p>
+      </div>
+
+      <div class="services-detail-grid">
+        <!-- 24/7 CHATTING -->
+        <div class="service-detail-card" id="chatting">
+          <div class="service-detail-header">
+            <div class="service-detail-icon">💬</div>
+            <h2>24/7 chatting</h2>
+          </div>
+          <p class="service-description">Never miss a message again. Our professional chatters engage with your fans around the clock, maintaining your authentic voice while maximizing conversion opportunities.</p>
+          <ul class="service-features">
+            <li>round-the-clock coverage (24/7/365)</li>
+            <li>personalized responses in your voice</li>
+            <li>instant reply to every message</li>
+            <li>upsell scripting and conversion optimization</li>
+            <li>daily performance summaries</li>
+          </ul>
+          <div class="service-pricing">
+            <div class="pricing-label">starting at</div>
+            <div class="pricing-value">$1,500<span class="pricing-period">/mo</span></div>
+            <div class="pricing-note">+ performance commission</div>
+          </div>
+          <div class="service-buttons">
+            <button class="btn-primary" onclick="window.location.href='contact.html'">get started</button>
+            <button class="btn-outline" onclick="alert('free consultation call available')">book a call</button>
+          </div>
+        </div>
+
+        <!-- PPV & TIPS -->
+        <div class="service-detail-card" id="ppv">
+          <div class="service-detail-header">
+            <div class="service-detail-icon">💰</div>
+            <h2>PPV & tips</h2>
+          </div>
+          <p class="service-description">Strategic pay-per-view and tipping management that turns casual followers into high-spending fans. We optimize timing, pricing, and messaging for maximum revenue.</p>
+          <ul class="service-features">
+            <li>data-driven pricing strategies</li>
+            <li>personalized offers based on spending patterns</li>
+            <li>optimal timing for PPV drops</li>
+            <li>upselling techniques that convert</li>
+            <li>A/B tested messaging</li>
+          </ul>
+          <div class="service-pricing">
+            <div class="pricing-label">starting at</div>
+            <div class="pricing-value">$1,200<span class="pricing-period">/mo</span></div>
+            <div class="pricing-note">+ revenue share</div>
+          </div>
+          <div class="service-buttons">
+            <button class="btn-primary" onclick="window.location.href='contact.html'">get started</button>
+            <button class="btn-outline" onclick="alert('free consultation call available')">book a call</button>
+          </div>
+        </div>
+
+        <!-- CRM & ANALYTICS -->
+        <div class="service-detail-card" id="analytics">
+          <div class="service-detail-header">
+            <div class="service-detail-icon">📊</div>
+            <h2>CRM & analytics</h2>
+          </div>
+          <p class="service-description">Detailed tracking of fan interactions and spending patterns. We provide weekly reports and actionable insights to continuously optimize your strategy.</p>
+          <ul class="service-features">
+            <li>weekly performance reports</li>
+            <li>conversion rate optimization</li>
+            <li>subscriber behavior insights</li>
+            <li>LTV tracking and forecasting</li>
+            <li>custom dashboard access</li>
+          </ul>
+          <div class="service-pricing">
+            <div class="pricing-label">starting at</div>
+            <div class="pricing-value">$800<span class="pricing-period">/mo</span></div>
+            <div class="pricing-note">add-on to chat services</div>
+          </div>
+          <div class="service-buttons">
+            <button class="btn-primary" onclick="window.location.href='contact.html'">get started</button>
+            <button class="btn-outline" onclick="alert('free consultation call available')">book a call</button>
+          </div>
+        </div>
+
+        <!-- CUSTOM VOICE NOTES -->
+        <div class="service-detail-card" id="voice">
+          <div class="service-detail-header">
+            <div class="service-detail-icon">🎙️</div>
+            <h2>custom voice notes</h2>
+          </div>
+          <p class="service-description">Premium upsell through personalized voice messages. Voice notes convert 3x higher than text and create deeper emotional connections with fans.</p>
+          <ul class="service-features">
+            <li>professional voice artists (optional)</li>
+            <li>scheduled for optimal engagement</li>
+            <li>personalized to each fan</li>
+            <li>premium pricing opportunities</li>
+            <li>custom scripts in your voice</li>
+          </ul>
+          <div class="service-pricing">
+            <div class="pricing-label">starting at</div>
+            <div class="pricing-value">$500<span class="pricing-period">/mo</span></div>
+            <div class="pricing-note">+ per-note pricing available</div>
+          </div>
+          <div class="service-buttons">
+            <button class="btn-primary" onclick="window.location.href='contact.html'">get started</button>
+            <button class="btn-outline" onclick="alert('free sample available')">hear a sample</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING PLANS -->
+    <section class="pricing-section">
+      <div class="section-header">
+        <div class="section-tag">✦ simple pricing ✦</div>
+        <h2 class="section-title">plans for every <span class="text-accent">stage</span></h2>
+        <p class="section-subtitle">choose the package that fits your goals</p>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- STARTER PLAN -->
+        <div class="pricing-card">
+          <h3>starter</h3>
+          <div class="price">$1,500<span>/mo</span></div>
+          <p class="description">perfect for new and growing creators</p>
+          <ul class="pricing-features">
+            <li>24/7 chat support</li>
+            <li>basic PPV management</li>
+            <li>weekly reports</li>
+            <li>up to 500 messages/day</li>
+            <li>1 dedicated chatter</li>
+          </ul>
+          <button class="btn-outline" style="width: 100%;" onclick="window.location.href='contact.html'">get started</button>
+        </div>
+
+        <!-- PROFESSIONAL PLAN (POPULAR) -->
+        <div class="pricing-card popular">
+          <div class="popular-badge">most popular</div>
+          <h3>professional</h3>
+          <div class="price">$2,800<span>/mo</span></div>
+          <p class="description">for serious creators ready to scale</p>
+          <ul class="pricing-features">
+            <li>24/7 chat support</li>
+            <li>advanced PPV & tips strategy</li>
+            <li>CRM & analytics dashboard</li>
+            <li>unlimited messages</li>
+            <li>2 dedicated chatters</li>
+            <li>voice note integration</li>
+            <li>weekly strategy calls</li>
+          </ul>
+          <button class="btn-primary" style="width: 100%;" onclick="window.location.href='contact.html'">get started</button>
+        </div>
+
+        <!-- ENTERPRISE PLAN -->
+        <div class="pricing-card">
+          <h3>enterprise</h3>
+          <div class="price">custom</div>
+          <p class="description">for top 1% creators and agencies</p>
+          <ul class="pricing-features">
+            <li>everything in professional</li>
+            <li>dedicated account manager</li>
+            <li>custom AI training</li>
+            <li>multi-account management</li>
+            <li>team of 4+ chatters</li>
+            <li>priority 24/7 support</li>
+            <li>custom development</li>
+          </ul>
+          <button class="btn-outline" style="width: 100%;" onclick="window.location.href='contact.html'">contact us</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ADD-ONS SECTION -->
+    <section class="addons-section">
+      <div class="section-header">
+        <div class="section-tag">✦ add-ons ✦</div>
+        <h2 class="section-title">enhance your <span class="text-accent">experience</span></h2>
+        <p class="section-subtitle">optional upgrades for additional growth</p>
+      </div>
+
+      <div class="addons-grid">
+        <div class="addon-card">
+          <div class="addon-icon">📸</div>
+          <h3>content strategy</h3>
+          <p>optimize your posting schedule</p>
+          <div class="addon-price">$400/mo</div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-icon">🤖</div>
+          <h3>auto-responders</h3>
+          <p>automated welcome sequences</p>
+          <div class="addon-price">$300/mo</div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-icon">📈</div>
+          <h3>growth consulting</h3>
+          <p>1-on-1 strategy sessions</p>
+          <div class="addon-price">$200/hr</div>
+        </div>
+        <div class="addon-card">
+          <div class="addon-icon">🎨</div>
+          <h3>custom scripts</h3>
+          <p>tailored messaging templates</p>
+          <div class="addon-price">$500 one-time</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="faq-section">
+      <div class="section-header">
+        <div class="section-tag">✦ common questions ✦</div>
+        <h2 class="section-title">frequently asked <span class="text-accent">questions</span></h2>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-item">
+          <div class="faq-question">how do you maintain my voice?</div>
+          <div class="faq-answer">we study your past conversations, create a detailed voice guide, and our chatters are trained specifically on your style before they start.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">can I see reports?</div>
+          <div class="faq-answer">absolutely! you get weekly reports with message volume, conversion rates, revenue breakdown, and optimization recommendations.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">is there a contract?</div>
+          <div class="faq-answer">month-to-month with no long-term commitment. we earn your trust every month.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">what if I'm not satisfied?</div>
+          <div class="faq-answer">we offer a 14-day satisfaction guarantee. if you're not happy, you don't pay.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+      <div class="container">
+        <h2 class="cta-title">ready to <span style="color: rgba(255,255,255,0.9);">scale?</span></h2>
+        <p class="cta-text">join 70+ creators who trust us with their growth</p>
+        <button class="cta-button" onclick="window.location.href='contact.html'">start your journey →</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo-link">
+          <img src="images/rise_logo.png" alt="RISE" class="logo-img" onerror="this.style.display='none'">
+        </a>
+        <p>premium onlyfans management for serious creators</p>
+        <div class="social-links">
+          <a href="#" class="social-link">📷</a>
+          <a href="#" class="social-link">📱</a>
+          <a href="#" class="social-link">🐦</a>
+          <a href="#" class="social-link">💬</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>pages</h4>
+        <ul>
+          <li><a href="index.html">home</a></li>
+          <li><a href="about.html">about</a></li>
+          <li><a href="services.html">services</a></li>
+          <li><a href="results.html">results</a></li>
+          <li><a href="blog.html">blog</a></li>
+          <li><a href="contact.html">contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>legal</h4>
+        <ul>
+          <li><a href="#">privacy</a></li>
+          <li><a href="#">terms</a></li>
+          <li><a href="#">cookies</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>contact</h4>
+        <ul>
+          <li><a href="mailto:hello@rise.agency">hello@rise.agency</a></li>
+          <li><a href="#">@rise.agency</a></li>
+          <li><a href="#">telegram</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 RISE · premium creator management · all rights reserved
+    </div>
+  </footer>
+
+  <script>
+    // active nav based on current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const navLinks = document.querySelectorAll('.nav-link');
+      
+      navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href');
+        if (linkPage === currentPage) {
+          link.classList.add('active');
+        }
+      });
+
+      // smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
